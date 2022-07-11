@@ -5,6 +5,16 @@
 {% endblock %}
 
 {% block content %}
-    <h1>таблица создания</h1>
+    <h1>Создание нового клиента</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.name_client }}<br>
+        {{ form.sex_client }}<br>
+        {{ form.numbers_phone }}<br>
+        {{ form.address_client }}<br>
+        {{ form.car_client }}<br>
+       <button type="submit" class="btn btn-success">Добавить</button>
+        <span>{{error}}</span>
+    </form>
 {% endblock %}
 
