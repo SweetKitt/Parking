@@ -5,11 +5,10 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Создание нового клиента</h1>
+    <h1>Создание нового автомобиля</h1>
     <form action="{% url 'creation' %}" method='post'>
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form2.as_p }}
         <button type="submit" class="btn btn-success">Добавить</button>
     </form>
 {% endblock %}
-
