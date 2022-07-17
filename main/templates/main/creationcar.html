@@ -6,7 +6,7 @@
 
 {% block content %}
     <h1>Создание нового автомобиля</h1>
-    <form action="{% url 'creation' %}" method='post'>
+    <form action="{% url 'creation_car' %}" method='post'>
         {% csrf_token %}
         {{ form2.as_p }}
         <button type="submit" class="btn btn-success">Добавить</button>
