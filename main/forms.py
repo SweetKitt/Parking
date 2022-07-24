@@ -22,7 +22,7 @@ class CarForm(forms.ModelForm):
     model = forms.CharField(max_length=50, label='Модель', widget=forms.TextInput(attrs={'class': 'form-control'}))
     color = forms.CharField(max_length=50, label='Цвет', widget=forms.TextInput(attrs={'class': 'form-control'}))
     gos_number = forms.CharField(max_length=10, label='Гос. номер', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    flag = forms.BooleanField(label='Наличие авто на парковке', initial=True)
+    flag = forms.BooleanField(label='Наличие авто на парковке', initial=True, required=False)
 
     class Meta:
         model = Car

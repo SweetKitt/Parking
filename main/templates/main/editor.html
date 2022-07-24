@@ -5,7 +5,13 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Редактор таблица</h1>
+    <body class="container">
+        <form method='post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Сохранить изменение</button>
+    </form>
+    </body>
 {% endblock %}
 
 

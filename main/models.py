@@ -27,6 +27,9 @@ class Car(models.Model):
     def __str__(self):
         return self.brand
 
+    def get_absolute_url(self):
+        return f'/'
+
     class Meta:
         verbose_name = 'Автомобиль'
         verbose_name_plural = 'Автомобили'
