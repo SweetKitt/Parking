@@ -1,15 +1,18 @@
 from django.db import models
+from django.core.validators import MinLengthValidator
 
 
 class Client(models.Model):
-    name_client = models.CharField('ФИО', max_length=50)
-    sex_client = models.CharField('Пол(м/ж)', max_length=1)
-    numbers_phone = models.CharField('Номер тел.(с 8)', max_length=11)
-    address_client = models.CharField('Адрес', max_length=150)
-    car_client = models.IntegerField('Кол-во авто')
+    GENDER_CHOISE = (('м', "мужской"),
+                     ('ж', "женский"),)
+    name = models.TextField('ФИО', validators=[MinLengthValidator(3, message='Имя не может быть меньше 3х символов')])
+    sex = models.CharField(max_length=1, choices=GENDER_CHOISE)
+    numbers_phone = models.TextField('Номер тел.(с 8)', unique=True)
+    address = models.TextField('Адрес')
+    cars = models.IntegerField('Кол-во авто')
 
     def __str__(self):
-        return self.name_client
+        return self.name
 
     class Meta:
         verbose_name = 'Клиент'
@@ -18,11 +21,11 @@ class Client(models.Model):
 
 class Car(models.Model):
     owner = models.ForeignKey(Client, on_delete=models.CASCADE)
-    brand = models.CharField('Марка', max_length=50)
-    model = models.CharField('Модель', max_length=50)
-    color = models.CharField('Цвет', max_length=50)
-    gos_number = models.CharField('Гос номер', max_length=10)
-    flag = models.BooleanField()
+    brand = models.TextField('Марка')
+    model = models.TextField('Модель')
+    color = models.TextField('Цвет')
+    licence_plate = models.TextField('Гос номер', unique=True)
+    is_on_parking = models.BooleanField()
 
     def __str__(self):
         return self.brand
