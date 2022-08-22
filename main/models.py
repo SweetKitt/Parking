@@ -5,7 +5,7 @@ from django.core.validators import MinLengthValidator
 class Client(models.Model):
     GENDER_CHOISE = (('м', "мужской"),
                      ('ж', "женский"),)
-    name = models.TextField('ФИО', validators=[MinLengthValidator(3, message='Имя не может быть меньше 3х символов')])
+    name = models.TextField('ФИО', validators=[MinLengthValidator(limit_value=3, message='Имя не может быть меньше 3х символов')])
     sex = models.CharField(max_length=1, choices=GENDER_CHOISE)
     numbers_phone = models.TextField('Номер тел.(с 8)', unique=True)
     address = models.TextField('Адрес')
@@ -13,6 +13,9 @@ class Client(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return f'/'
 
     class Meta:
         verbose_name = 'Клиент'

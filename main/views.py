@@ -40,6 +40,17 @@ class EditorView(UpdateView):
     template_name = 'main/editor.html'
     form_class = CarForm
 
+def editor_owner(request):
+    if request.method == 'POST':
+        value_owner = request.POST.get('owner')
+        print(value_owner)
+        EditorClientView.as_view().value_owner
+
+
+class EditorClientView(UpdateView):
+    model = Client
+    template_name = 'main/editor_client.html'
+    form_class = ClientForm
 
 
 def delete(request, id):
@@ -51,3 +62,10 @@ def delete(request, id):
         return HttpResponseNotFound("<h2>Запись не найдена</h2>")
 
 
+def delete_client(request, id):
+    try:
+        client = Client.objects.get(id=id)
+        client.delete()
+        return HttpResponseRedirect("/")
+    except Car.DoesNotExist:
+        return HttpResponseNotFound("<h2>Запись не найдена</h2>")
