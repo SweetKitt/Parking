@@ -3,12 +3,16 @@ from .models import Client, Car
 from .forms import ClientForm, CarForm
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.views.generic import UpdateView
+from django.core.paginator import Paginator
 
 
 def home(request):
     clients = Client.objects.all()
     cars = Car.objects.all()
-    return render(request, 'main/home.html', {'home': 'Все клиенты', 'clients': clients, 'cars': cars})
+    paginator = Paginator(cars, 3)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'main/home.html', {'home': 'Все клиенты', 'clients': clients, 'cars': cars, 'page_obj': page_obj})
 
 
 def creation(request):
@@ -28,7 +32,7 @@ def creation_car(request):
         form2 = CarForm(request.POST)
         if form2.is_valid():
             form2.save()
-            return redirect('home')
+            return redirect('/')
     else:
         form2 = CarForm()
     form2 = CarForm()
@@ -39,12 +43,6 @@ class EditorView(UpdateView):
     model = Car
     template_name = 'main/editor.html'
     form_class = CarForm
-
-def editor_owner(request):
-    if request.method == 'POST':
-        value_owner = request.POST.get('owner')
-        print(value_owner)
-        EditorClientView.as_view().value_owner
 
 
 class EditorClientView(UpdateView):
@@ -69,3 +67,4 @@ def delete_client(request, id):
         return HttpResponseRedirect("/")
     except Car.DoesNotExist:
         return HttpResponseNotFound("<h2>Запись не найдена</h2>")
+

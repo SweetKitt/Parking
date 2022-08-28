@@ -20,6 +20,7 @@ class Client(models.Model):
     class Meta:
         verbose_name = 'Клиент'
         verbose_name_plural = 'Клиенты'
+        ordering = ['name']
 
 
 class Car(models.Model):
@@ -39,5 +40,5 @@ class Car(models.Model):
     class Meta:
         verbose_name = 'Автомобиль'
         verbose_name_plural = 'Автомобили'
-
+        ordering = ['owner']
 
