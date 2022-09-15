@@ -75,26 +75,52 @@
       </ul>
     </nav>
     {% endif %}
-
-    <form>
-        <select class="form-select" aria-label="Выбор клиента">
-        <option selected>Выберете клиента</option>
-            {% if cars %}
-                {% for el in cars %}
-                    <option value="{{ el.id }}">{{ el.owner}}</option>
-                {% endfor %}
-            {% endif %}
-        </select>
-        <select class="form-select" aria-label="Выбор авто">
-        <option selected>Выберете автомобиль</option>
+    <form method="post">
+        {% csrf_token %}
+        <select class="form-select" name="owner" id="owner">
+                <option value="" selected>Выберете клиента</option>
+                {% if clients %}
+                    {% for el in clients %}
+                        <option data-id="{{ el.id }}" value="{{ el.id }}">{{ el.name }}</option>
+                    {% endfor %}
+                {% endif %}
+        </select><br>
+        <select class="form-select" name="car" id="car">
+            <option value="" selected>Выберете автомобиль</option>
             {% if cars %}
                 {% for el in cars %}
                     {% if not el.is_on_parking %}
-                        <option value="{{ el.id }}">{{ el.licence_plate}}</option>
+                        <option data-owner-id="{{ el.owner.id}}" value="{{ el.id}}" disabled="disabled">{{ el.brand }}</option>
                     {% endif %}
                 {% endfor %}
             {% endif %}
-        </select>
+        </select><br>
+        <button type="submit" class="btn btn-success">Добавить автомобиль на парковку</button>
     </form>
 </div>
+
+    <script>
+        // Устанваливаем обновление списка машин при измение владельца
+        var ownerSelect = document.getElementById("owner");
+        ownerSelect.addEventListener("change", setOnlyOwnerCars);
+
+        function setOnlyOwnerCars() {
+            var carSelect = document.getElementById("car")
+
+            // Очищаем выбраны автомобиль так как ранее мог быть выбран автомобиль другого владельца
+            carSelect.value = ""
+
+            carOptions = carSelect.querySelectorAll("option");
+            selectedOwner = ownerSelect.options[ownerSelect.selectedIndex]
+            // Делаем доступными только атомобили выбраного владельца
+            for (var option of carOptions) {
+                if (option.dataset.ownerId == selectedOwner.dataset.id) {
+                    option.removeAttribute("disabled");
+                } else {
+                    option.setAttribute("disabled", "disabled");
+                }
+            }
+        };
+    </script>
+</html>
 {% endblock %}
