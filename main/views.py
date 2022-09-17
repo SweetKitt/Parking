@@ -53,19 +53,6 @@ class EditorView(UpdateView):
     template_name = 'main/editor.html'
     form_class = EditCarForm
 
-# def car_editing(request, id):
-#     car = Car.objects.get(id=id)
-#     if request.method == 'POST':
-#         car.brand = request.POST.get('brand', car.brand)
-#         car.model = request.POST.get('model', car.model)
-#         car.color = request.POST.get('color', car.color)
-#         car.licence_plate = request.POST.get('licence_plate', car.licence_plate)
-#         car.is_on_parking = request.POST.get('is_on_parking', False)
-#         car.save()
-#         return HttpResponseRedirect('/')
-#     else:
-#         return render(request, "main/editor.html", {"car": car})
-
 
 class EditorClientView(UpdateView):
     model = Client
@@ -80,7 +67,6 @@ def delete_car(request, id):
         return HttpResponseNotFound("<h2>Запись не найдена</h2>")
     car.delete()
     return HttpResponseRedirect("/")
-
 
 
 def delete_client(request, id):
