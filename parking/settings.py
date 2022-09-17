@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
-    'django_tables2',
+    'smart_selects',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +59,7 @@ TEMPLATES = [
     },
 ]
 
-DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap.html"
+
 
 WSGI_APPLICATION = 'parking.wsgi.application'
 
