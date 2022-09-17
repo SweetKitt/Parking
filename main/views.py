@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Client, Car
-from .forms import ClientForm, CarForm
+from .forms import ClientForm, CarForm, EditCarForm
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.views.generic import UpdateView
 from django.core.paginator import Paginator
@@ -48,23 +48,23 @@ def create_car(request):
     return render(request, 'main/creationcar.html', {'form2': form2})
 
 
-# class EditorView(UpdateView):
-#     model = Car
-#     template_name = 'main/editor.html'
-#     form_class = CarForm
+class EditorView(UpdateView):
+    model = Car
+    template_name = 'main/editor.html'
+    form_class = EditCarForm
 
-def car_editing(request, id):
-    car = Car.objects.get(id=id)
-    if request.method == 'POST':
-        car.brand = request.POST.get('brand', car.brand)
-        car.model = request.POST.get('model', car.model)
-        car.color = request.POST.get('color', car.color)
-        car.licence_plate = request.POST.get('licence_plate', car.licence_plate)
-        car.is_on_parking = request.POST.get('is_on_parking', False)
-        car.save()
-        return HttpResponseRedirect('/')
-    else:
-        return render(request, "main/editor.html", {"car": car})
+# def car_editing(request, id):
+#     car = Car.objects.get(id=id)
+#     if request.method == 'POST':
+#         car.brand = request.POST.get('brand', car.brand)
+#         car.model = request.POST.get('model', car.model)
+#         car.color = request.POST.get('color', car.color)
+#         car.licence_plate = request.POST.get('licence_plate', car.licence_plate)
+#         car.is_on_parking = request.POST.get('is_on_parking', False)
+#         car.save()
+#         return HttpResponseRedirect('/')
+#     else:
+#         return render(request, "main/editor.html", {"car": car})
 
 
 class EditorClientView(UpdateView):
